@@ -1,19 +1,28 @@
 <template>
-  <div class="mt-12 flex flex-col">
+  <form @submit.prevent="login" class="flex flex-col">
     <label>
         <span class="block">Username</span>
-              <input id="username" v-model="username" />      
+              <input v-model="email" class="w-full" />      
     </label>
               <label for="password"><span class="block">Password</span>
               <input id="password" v-model="password" class="w-full" />
             </label>
-            <button>Log In!</button>
-      </div>
+            <button type="submit">Log In!</button>
+      </form>
 
 </template>
 
 <script setup lang="ts">
+import axios from 'axios';
+
 const m = import.meta.env.VITE_API_URL
-const username = ref('')
+const email = ref('')
 const password = ref('')
+
+function login() {
+  axios.post(m + '/auth/login', {
+    email: email.value,
+    password: password.value
+  })
+}
 </script>
