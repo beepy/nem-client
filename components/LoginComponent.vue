@@ -2,12 +2,12 @@
   <div class="mt-12 flex flex-col">
     <label>
         <span class="block">Username</span>
-              <InputText id="username" v-model="username" />      
+              <input id="username" v-model="username" />      
     </label>
               <label for="password"><span class="block">Password</span>
-              <Password id="password" v-model="password" class="w-full" />
+              <input id="password" v-model="password" class="w-full" />
             </label>
-            <Button>Log In</Button>
+            <button>Log In!</button>
       </div>
 
 </template>
