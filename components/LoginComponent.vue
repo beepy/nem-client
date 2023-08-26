@@ -1,5 +1,6 @@
 <template>
   <form class="flex flex-col" @submit.prevent="login">
+    <p>{{ redirectToRoute }}</p>
     <label>
       <span class="block">Username</span>
       <input v-model="email" class="w-full" />
@@ -13,16 +14,24 @@
 </template>
 
 <script setup lang="ts">
-import axios from 'axios';
+import { storeToRefs } from 'pinia';
+import { useLoginStore } from '@/stores/LoginStore';
 
-const m = import.meta.env.VITE_API_URL;
-const email = ref('');
-const password = ref('');
+const email = ref(import.meta.env.VITE_USER_EMAIL ?? '');
+const password = ref(import.meta.env.VITE_USER_PASSWORD ?? '');
+const loginStore = useLoginStore();
+const { redirectToRoute } = storeToRefs(loginStore);
+const router = useRouter();
 
 function login() {
-  axios.post(m + '/auth/login', {
-    email: email.value,
-    password: password.value,
+  // axios.post(m + '/auth/login', {
+  //   email: email.value,
+  //   password: password.value,
+  // }).then((response) => {
+
+  // });
+  loginStore.login(email.value, password.value).then(() => {
+    router.replace(redirectToRoute.value);
   });
 }
 </script>
